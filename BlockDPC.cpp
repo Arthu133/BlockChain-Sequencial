@@ -20,8 +20,10 @@ using namespace sycl;
 
 void Block::MineBlock(uint32_t nDifficulty)
 {
-    // Define o dispositivo onde a mineração será executada (CPU ou GPU)
-    queue q;
+    // Define o dispositivo onde a mineração será executada (GPU, porém CPU em caso de erro)
+    gpu_selector gpuSelector;
+    queue q(gpuSelector);  // Cria a fila de execução para a GPU
+
 
     // Armazena o hash final e o nonce encontrado
     uint32_t nonce_results[1] = {0};
