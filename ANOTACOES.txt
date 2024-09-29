@@ -12,3 +12,31 @@ Distribuição de Transações e Sincronização:
 
 Embora a adição de blocos seja sequencial, a propagação e validação de transações em uma rede blockchain pode ser paralelizada. Cada nó na rede pode processar transações em paralelo antes de agrupá-las em um bloco.
 Em uma rede distribuída, o DPC++ pode ajudar a acelerar o processamento das transações antes que elas sejam mineradas, melhorando a eficiência de cada nó.
+
+================================================================================================================
+PLANO: 
+
+1---Paralelizar o processo de verificação do nonce.
+        Cada thread verificará diferentes nonces em paralelo.
+            O objetivo é encontrar um nonce que gere um hash com os zeros à esquerda, como definido pela dificuldade.
+
+
+                    Buffer para Resultados:
+                        Criamos dois buffers: um para armazenar o nonce correto encontrado e outro para marcar se o nonce foi encontrado (nonce_found).
+                    String de Dificuldade:
+                        A string target é criada com nDifficulty zeros para verificar se o hash começa com a quantidade necessária de zeros.
+                    Execução Paralela (parallel_for):
+                        Usamos o método parallel_for de DPC++ para lançar 256 threads (ou work-items). Cada thread testa um valor de nonce e incrementa o nonce em múltiplos de 256, 
+                        para evitar que as threads colidam no valor do nonce.
+                    Cálculo do Hash:
+                        Para cada thread, o hash é calculado com base no nonce atual e outros parâmetros do bloco. Em seguida, verificamos se o hash atende à dificuldade.
+                    Incremento do Nonce:
+                        Cada thread testa local_nonce e o incrementa em 256 para garantir que as threads não testem o mesmo valor de nonce.
+                    Sincronização e Resultado:
+                        Após todas as threads tentarem encontrar o nonce correto, a execução é sincronizada com wait(), e o nonce encontrado é salvo no bloco.
+
+
+2---Passos para Paralelização:
+        Buffer de Saída: Criaremos um buffer para armazenar o resultado da mineração (nonce correto) em cada thread.
+            Divisão de Trabalho: Cada thread testará um conjunto de valores de nonce em paralelo.
+                Sincronização: Após a execução paralela, coletaremos o nonce válido.
