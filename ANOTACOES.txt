@@ -4,14 +4,31 @@ Mineração de Blocos (Proof of Work):
 A mineração é uma tarefa intensiva de computação que envolve encontrar um valor de nonce que, ao ser combinado com os dados do bloco e passado por uma função hash, resulte em um hash que satisfaça a dificuldade da rede (como um certo número de zeros à esquerda).
 Esse processo é altamente paralelizável. Em vez de testar nonces de maneira sequencial, você pode dividir o trabalho entre diferentes threads e executá-los em paralelo em uma GPU ou outro dispositivo.
 Com DPC++, você pode distribuir o trabalho de mineração entre os dispositivos disponíveis, como GPUs e FPGAs, e acelerar o processo de validação do bloco.
+
+
+
+
+
+
 Verificação de Blocos:
 
 Quando os blocos são transmitidos na rede blockchain, cada nó da rede precisa verificar a integridade e a validade do bloco. Isso envolve a verificação de hashes e, potencialmente, de várias transações dentro do bloco. Esse processo também pode ser paralelizado.
 Em DPC++, você pode criar kernels que processam múltiplas transações de um bloco em paralelo para verificar a integridade e validade do bloco mais rapidamente.
+
+
+
+
+
+
+
 Distribuição de Transações e Sincronização:
 
 Embora a adição de blocos seja sequencial, a propagação e validação de transações em uma rede blockchain pode ser paralelizada. Cada nó na rede pode processar transações em paralelo antes de agrupá-las em um bloco.
 Em uma rede distribuída, o DPC++ pode ajudar a acelerar o processamento das transações antes que elas sejam mineradas, melhorando a eficiência de cada nó.
+
+
+
+
 
 ================================================================================================================
 PLANO: 
